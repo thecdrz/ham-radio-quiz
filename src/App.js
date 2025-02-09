@@ -15,7 +15,7 @@ const QuizApp = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const version = "v2.3.7";
+  const version = "v2.4.1";
 
   useEffect(() => {
     setShuffledQuestions([...questions].sort(() => Math.random() - 0.5));
