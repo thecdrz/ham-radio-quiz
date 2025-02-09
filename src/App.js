@@ -1,9 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Quiz from "./Quiz";
-import Reports from "./Reports";
-import Stats from "./Stats";
 
 const Home = () => {
   return (
@@ -20,6 +17,10 @@ const Home = () => {
   );
 };
 
+const Quiz = () => <div style={{ textAlign: "center", padding: "40px" }}><h2>Practice Quiz</h2><p>Coming soon...</p></div>;
+const Reports = () => <div style={{ textAlign: "center", padding: "40px" }}><h2>Reports</h2><p>Performance reports will be available soon.</p></div>;
+const Stats = () => <div style={{ textAlign: "center", padding: "40px" }}><h2>Statistics</h2><p>Visual statistics will be displayed here.</p></div>;
+
 const App = () => {
   return (
     <Router>
@@ -33,7 +34,7 @@ const App = () => {
   );
 };
 
-const version = "v1.0.0";
+const version = "v1.0.1";
 
 const Footer = () => (
   <footer style={{ padding: "15px", textAlign: "center", background: "#222", color: "#aaa", fontSize: "14px", marginTop: "40px", borderTop: "2px solid #FFD700" }}>
