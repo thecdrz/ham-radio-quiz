@@ -1,0 +1,91 @@
+import React, { useState } from "react";
+
+const sections = ["Exam Questions", "Reports", "Statistics", "Credits"];
+const questionGroups = ["Group 1", "Group 2", "Group 3"];
+const questions = {
+  "Group 1": [
+    { id: 1, question: "What is the purpose of a call sign?", options: ["Identify operator", "Change frequency", "Boost signal", "None"], correct: 0 },
+    { id: 2, question: "What is the maximum power allowed?", options: ["10W", "50W", "100W", "200W"], correct: 2 }
+  ],
+  "Group 2": [
+    { id: 3, question: "What frequency range is allocated to amateur radio?", options: ["1-30MHz", "3-30MHz", "30-300MHz", "All of the above"], correct: 3 }
+  ]
+};
+
+const QuizApp = () => {
+  const [currentSection, setCurrentSection] = useState("Dashboard");
+  const [currentGroup, setCurrentGroup] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+  const version = "v1.0.0";
+
+  const handleAnswer = (index) => {
+    const correct = questions[currentGroup][currentQuestionIndex].correct;
+    setSelectedOption(index);
+    setFeedback(index === correct ? "Correct! 🎉" : "Incorrect ❌");
+  };
+
+  return (
+    <div style={{ maxWidth: "800px", margin: "auto", textAlign: "center", padding: "20px", background: "#121212", color: "#fff", minHeight: "100vh" }}>
+      <header style={{ background: "#222", padding: "15px", textAlign: "center", fontSize: "24px", fontWeight: "bold" }}>
+        Ham Radio Study App
+      </header>
+      <nav style={{ display: "flex", justifyContent: "center", gap: "20px", padding: "15px", background: "#333", position: "sticky", top: 0, width: "100%", zIndex: 1000 }}>
+        {sections.map((section) => (
+          <button 
+            key={section} 
+            style={{ padding: "10px 15px", fontSize: "16px", background: "#444", border: "none", borderRadius: "5px", cursor: "pointer", color: "#fff" }}
+            onClick={() => { setCurrentSection(section); setCurrentGroup(null); setCurrentQuestionIndex(null); }}
+          >
+            {section}
+          </button>
+        ))}
+      </nav>
+      <main style={{ padding: "20px" }}>
+        <h2>{currentSection}</h2>
+        {currentSection === "Exam Questions" && currentGroup === null && (
+          <div>
+            <h3>Select a Question Group</h3>
+            {questionGroups.map((group) => (
+              <button key={group} style={{ display: "block", margin: "10px auto", padding: "12px", width: "100%", fontSize: "18px", background: "#444", border: "1px solid #666", borderRadius: "5px", cursor: "pointer", color: "#fff" }}
+                onClick={() => setCurrentGroup(group)}>
+                {group}
+              </button>
+            ))}
+          </div>
+        )}
+        {currentGroup && currentQuestionIndex === null && (
+          <div>
+            <h3>{currentGroup}</h3>
+            {questions[currentGroup].map((q, idx) => (
+              <button key={q.id} style={{ display: "block", margin: "10px auto", padding: "12px", width: "100%", fontSize: "18px", background: "#444", border: "1px solid #666", borderRadius: "5px", cursor: "pointer", color: "#fff" }}
+                onClick={() => setCurrentQuestionIndex(idx)}>
+                Question {idx + 1}
+              </button>
+            ))}
+            <button style={{ padding: "10px", marginTop: "10px", background: "#666", border: "none", color: "#fff", cursor: "pointer", borderRadius: "5px" }} onClick={() => setCurrentGroup(null)}>Back</button>
+          </div>
+        )}
+        {currentGroup && currentQuestionIndex !== null && (
+          <div>
+            <h3>{questions[currentGroup][currentQuestionIndex].question}</h3>
+            {questions[currentGroup][currentQuestionIndex].options.map((option, index) => (
+              <button key={index} style={{ display: "block", margin: "10px auto", padding: "12px", width: "100%", fontSize: "18px", background: selectedOption === index ? (index === questions[currentGroup][currentQuestionIndex].correct ? "green" : "red") : "#444", border: "1px solid #666", borderRadius: "5px", cursor: "pointer", color: "#fff" }}
+                onClick={() => handleAnswer(index)}>
+                {option}
+              </button>
+            ))}
+            {feedback && <p style={{ fontSize: "20px", fontWeight: "bold", marginTop: "10px" }}>{feedback}</p>}
+            <button style={{ padding: "10px", marginTop: "10px", background: "#666", border: "none", color: "#fff", cursor: "pointer", borderRadius: "5px" }} onClick={() => { setCurrentQuestionIndex(null); setFeedback(null); setSelectedOption(null); }}>Back</button>
+          </div>
+        )}
+      </main>
+      <footer style={{ padding: "10px", textAlign: "center", background: "#222", color: "#aaa", fontSize: "14px" }}>
+        Version: {version}
+      </footer>
+    </div>
+  );
+};
+
+export default QuizApp;
