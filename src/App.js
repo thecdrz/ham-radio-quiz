@@ -33,4 +33,12 @@ const App = () => {
   );
 };
 
+const version = "v1.0.0";
+
+const Footer = () => (
+  <footer style={{ padding: "15px", textAlign: "center", background: "#222", color: "#aaa", fontSize: "14px", marginTop: "40px", borderTop: "2px solid #FFD700" }}>
+    Version: {version}
+  </footer>
+);
+
 export default App;
